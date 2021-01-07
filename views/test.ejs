@@ -1,13 +1,50 @@
 <head></head>
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    function cal(){
+        var fuCount = $("#fuCount").val();
+        var count = $("#count").val()
+        var price = $("#price").val();
+        var fuPrice = $("#fuPrice").val();
+        var now = count * price;
+        var future = fuCount * fuPrice;
+        var sum = parseInt(fuCount) + parseInt(count);
+        $("#totalPrice").val((now + future)/sum)
+        $("#totalCount").val(sum);
+    }
+</script>
+<style>
+    .top{
+        height: 10%;
+    }
+    .middle{
+        height: 80%;
+    }
+    .bottom{
+        height: 10%;
+    }
+</style>
 <body>
     <div>
         <div class="top">
-            쌍따할아버지
-        </div>
-        <div class="middle">
             
         </div>
-        <div class="bottom"></div>
+        <div class="middle">
+            현재 보유
+            <input type="text" id="price" placeholder="평균단가(원)"> 
+            <input type="text" id="count" placeholder="수량">
+            <br>
+            구매예정
+            <input type="text" id="fuPrice" placeholder="매입가(원)">
+            <input type="text" id="fuCount" placeholder="수량" onkeyup="cal()">
+            <br>
+            총 합
+            <input type="text" id="totalPrice" placeholder="평균매입가" readonly>
+            <input type="text" id="totalCount" placeholder="잔고수량" readonly>
+        </div>
+        <div class="bottom">
+            footer
+        </div>
     </div>
 </body>
 <footer></footer>
