@@ -11,6 +11,7 @@
         var sum = parseInt(fuCount) + parseInt(count);
         $("#totalPrice").val((now + future)/sum)
         $("#totalCount").val(sum);
+        $("#sum").val(now + future);
     }
 </script>
 <style>
@@ -41,6 +42,8 @@
             총 합
             <input type="text" id="totalPrice" placeholder="평균매입가" readonly>
             <input type="text" id="totalCount" placeholder="잔고수량" readonly>
+            <br>
+            <input type="text" id="sum" placeholder="총 매입액">
         </div>
         <div class="bottom">
             footer
