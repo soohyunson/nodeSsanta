@@ -1,52 +1,104 @@
 <head></head>
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <script>
-    function cal(){
+     function inputNumberFormat(obj) {
+     obj.value = comma(uncomma(obj.value));
+     $("#price2").val(uncomma(obj.value))
+ }
+
+ function inputNumberFormat2(obj) {
+     obj.value = comma(uncomma(obj.value));
+     $("#fuPrice2").val(uncomma(obj.value))
+ }
+
+ function comma(str) {
+     str = String(str);
+     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+ }
+
+ function uncomma(str) {
+     str = String(str);
+     return str.replace(/[^\d]+/g, '');
+ }
+
+    function cal1() {
+        var price = $("#price2").val();
+        var count = $("#count").val();
+        $("#sum1").val(comma(price * count));
+    }
+
+    function cal2() {
         var fuCount = $("#fuCount").val();
         var count = $("#count").val()
-        var price = $("#price").val();
-        var fuPrice = $("#fuPrice").val();
+        var price = $("#price2").val();
+        var fuPrice = $("#fuPrice2").val();
+        $("#sum2").val(comma(fuCount * fuPrice));
         var now = count * price;
         var future = fuCount * fuPrice;
         var sum = parseInt(fuCount) + parseInt(count);
-        $("#totalPrice").val((now + future)/sum)
+        Math.ceil(((now + future) / sum) * 100 / 100)
+        var digits = Math.pow(10, 1);
+        var num = Math.ceil((now + future) / sum * digits) / digits
+        num = num.toFixed(1)
+        $("#totalPrice").val(num)
         $("#totalCount").val(sum);
-        $("#sum").val(now + future);
+        $("#sum").val(comma(now + future));
     }
 </script>
 <style>
-    .top{
+    .top {
         height: 10%;
     }
-    .middle{
+
+    .middle {
         height: 80%;
     }
-    .bottom{
+
+    .bottom {
         height: 10%;
     }
+
+    input {
+        height: 40px;
+        font-size: 20px;
+    }
+
+    table {
+        margin: auto;
+    }
 </style>
+
 <body>
-    <div>
+    <div style="height: 100vh;">
         <div class="top">
-            
+
         </div>
         <div class="middle">
-            현재 보유
-            <input type="text" id="price" placeholder="평균단가(원)"> 
-            <input type="text" id="count" placeholder="수량">
-            <br>
-            구매예정
-            <input type="text" id="fuPrice" placeholder="매입가(원)">
-            <input type="text" id="fuCount" placeholder="수량" onkeyup="cal()">
-            <br>
-            총 합
-            <input type="text" id="totalPrice" placeholder="평균매입가" readonly>
-            <input type="text" id="totalCount" placeholder="잔고수량" readonly>
-            <br>
-            <input type="text" id="sum" placeholder="총 매입액">
+            <table>
+                <tr>
+                    <td>현재보유</td>
+                    <td><input type="text" id="price" placeholder="평균단가(원)" onkeyup="inputNumberFormat(this)"></td>
+                    <input type="hidden" id="price2">
+                    <td><input type="text" id="count" placeholder="수량" onfocusout="cal1()"></td>
+                    <td><input type="text" id="sum1" placeholder="매입금액" readonly></td>
+                </tr>
+                <tr>
+                    <td>구매예정</td>
+                    <td><input type="text" id="fuPrice" placeholder="매입가(원)" onkeyup="inputNumberFormat2(this)"></td>
+                    <input type="hidden" id="fuPrice2">
+                    <td><input type="text" id="fuCount" placeholder="수량" onkeyup="cal2()"></td>
+                    <td><input type="text" id="sum2" placeholder="매입금액" readonly></td>
+                </tr>
+                <tr>
+                    <td>총&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;합</td>
+                    <td><input type="text" id="totalPrice" placeholder="평균매입가" readonly></td>
+                    <td><input type="text" id="totalCount" placeholder="잔고수량" readonly></td>
+                    <td><input type="text" id="sum" placeholder="총 매입액" readonly></td>
+                </tr>
+            </table>
         </div>
         <div class="bottom">
-            footer
+
         </div>
     </div>
 </body>
